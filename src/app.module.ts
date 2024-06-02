@@ -10,20 +10,15 @@ import { RoleModule } from './role/role.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AdminModule } from './admin/admin.module';
+import { dataSourceOptions } from './database/data-source';
 
 @Module({
   imports: [
-    
-    TypeOrmModule.forRoot({
-    type: 'postgres',
-    url: process.env.DATABASE_URL || "postgres://postgres.lprmxigitpcgddvpehit:laGalere72@Beuvrages@aws-0-eu-west-2.pooler.supabase.com:5432/postgres",
-    entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-    synchronize: true,
-  }),
+    TypeOrmModule.forRoot(dataSourceOptions),
   GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
     playground: true,
-    include: [AuthModule, UserModule, RoleModule],
+    include: [AuthModule, UserModule, RoleModule, AdminModule],
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
   }),
   AuthModule, 

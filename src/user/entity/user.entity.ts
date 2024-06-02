@@ -9,7 +9,7 @@ export class Users {
     id: number;
 
     @Column({nullable: false, type: String})
-    fistName: string;
+    firstName: string;
     
     @Column({nullable: false, type: String})
     lastName: string;

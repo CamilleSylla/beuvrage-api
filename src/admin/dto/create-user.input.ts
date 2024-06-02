@@ -1,8 +1,9 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { IsString } from "class-validator";
+import { Field, InputType } from "@nestjs/graphql";
+import { IsEnum, IsOptional, IsString } from "class-validator";
+import { RoleList } from "src/role/entity/role.enum";
 
-@ObjectType()
-export class CreateUser {
+@InputType()
+export class CreateUserInput {
     @Field(() => String)
     @IsString()
     firstName: string
@@ -10,4 +11,9 @@ export class CreateUser {
     @Field(() => String)
     @IsString()
     lastName: string
+    
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    @IsEnum(RoleList)
+    role?: RoleList
 }

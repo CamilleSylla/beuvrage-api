@@ -2,6 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserOutput {
+  id: String!
+  firstName: String!
+  lastName: String!
+  role: RoleList!
+}
+
+enum RoleList {
+  VIEWER
+  WRITER
+  COMMERCIAL
+  TEAMMANAGER
+  SUPERADMIN
+}
+
 type Query {
   getUser: String!
+}
+
+type Mutation {
+  adminCreateUser(user: CreateUserInput!): UserOutput!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  role: String
 }

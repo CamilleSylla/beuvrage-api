@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AdminResolver } from './admin.resolver';
-import { AdminService } from './admin.service';
+import { AdminUserResolver } from './admin-user.resolver';
+import { AdminUserService } from './admin-user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from 'src/user/entity/user.entity';
 
 @Module({
   imports : [TypeOrmModule.forFeature([Users])],
-  providers: [AdminResolver, AdminService]
+  providers: [AdminUserResolver, AdminUserService]
 })
 export class AdminModule {}
