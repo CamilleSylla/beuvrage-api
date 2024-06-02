@@ -6,7 +6,12 @@ type UserOutput {
   id: String!
   firstName: String!
   lastName: String!
-  role: RoleList!
+  role: [RoleOutput!]!
+}
+
+type RoleOutput {
+  id: String!
+  name: RoleList!
 }
 
 enum RoleList {

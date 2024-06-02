@@ -1,4 +1,4 @@
-import { Role } from 'src/role/entity/role.entity';
+import { RoleEntity } from 'src/role/entity/role.entity';
 import { RoleList } from 'src/role/entity/role.enum';
 import { DataSource } from 'typeorm';
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
@@ -10,9 +10,9 @@ export default class RoleSeeder implements Seeder {
   ): Promise<void> {
     console.log('seed.role : starting process');
 
-    await dataSource.query('TRUNCATE "role" RESTART IDENTITY CASCADE');
+    await dataSource.query('TRUNCATE "role_entity" RESTART IDENTITY CASCADE');
 
-    const roleRepository = dataSource.getRepository(Role);
+    const roleRepository = dataSource.getRepository(RoleEntity);
     console.log(roleRepository);
 
     // Use for...of loop to await async operations
