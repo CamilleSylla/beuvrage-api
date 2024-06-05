@@ -1,7 +1,7 @@
+import { InvitationEntity } from "src/auth/entity/invitation.entity";
 import { RoleOutput } from "src/role/dto/role.output";
 import { RoleEntity } from "src/role/entity/role.entity";
-import { RoleList } from "src/role/entity/role.enum";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class UsersEntity {
@@ -14,6 +14,12 @@ export class UsersEntity {
     
     @Column({nullable: false, type: String})
     lastName: string;
+    
+    @Column({nullable: false, type: String})
+    email: string;
+    
+    @Column({nullable: true, type: String, default: null, select: false})
+    password: string;
 
     @ManyToMany(() => RoleEntity, {
         nullable: false,
@@ -21,4 +27,11 @@ export class UsersEntity {
     })
     @JoinTable()
     role: RoleOutput[]
+
+    @Column({nullable: false, default: false})
+    verify: boolean
+    
+    @OneToOne(() => InvitationEntity, { cascade: true })
+    @JoinColumn()
+    invitation: InvitationEntity
 }

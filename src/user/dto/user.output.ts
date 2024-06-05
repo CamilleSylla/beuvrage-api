@@ -11,6 +11,9 @@ export class UserOutput {
 
     @Field(() => String)
     lastName: string;
+   
+    @Field(() => String)
+    email: string;
 
     @Field(() => RoleList)
     role: RoleList
