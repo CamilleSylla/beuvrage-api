@@ -11,22 +11,22 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    UserModule, 
+    UserModule,
     TypeOrmModule.forFeature([InvitationEntity]),
     ScheduleModule.forRoot(),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         secret: await configService.get('AUTH_INVITE_SIGN'),
-        signOptions : {
-          expiresIn: 3600
-        }
-      }), 
-      inject: [ConfigService]
-    })
+        signOptions: {
+          expiresIn: 3600,
+        },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, InvitationService],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}
