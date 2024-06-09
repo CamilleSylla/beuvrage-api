@@ -5,9 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersEntity } from 'src/user/entity/user.entity';
 import { RoleModule } from 'src/role/role.module';
 import { InvitationEntity } from 'src/auth/entity/invitation.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports : [TypeOrmModule.forFeature([UsersEntity, InvitationEntity]), RoleModule],
+  imports : [
+  TypeOrmModule.forFeature([UsersEntity, InvitationEntity]), 
+  RoleModule,
+  AuthModule
+],
   providers: [AdminUserResolver, AdminUserService]
 })
 export class AdminModule {}

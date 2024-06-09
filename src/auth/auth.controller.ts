@@ -1,16 +1,19 @@
-import { BadGatewayException, Controller, Get } from '@nestjs/common';
+import { BadGatewayException, Controller, Get, Logger, Param, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { ResetPasswordGuard } from './guard/resetPassword.guard';
 
 @Controller('auth')
 export class AuthController {
+    private logger = new Logger(AuthController.name)
     constructor(
         private readonly authService: AuthService
     ){}
-    @Get('/register/:token')
-    async registerUserInvitation(){
-        const email = 'email@gmail.com'
-        const validEmail = await this.authService.verifyInvitationMail(email)
-        if(!validEmail) throw new BadGatewayException(`Cannot find invitation for user : ${email}`)
-         
+
+    @UseGuards(ResetPasswordGuard)
+    @Get('/register/invitation/:token')
+    async registerUserInvitation(@Request() req: {user: {email: string, uuid: string}}){
+        const {user} = req;
+        this.logger.log(`auth.register.invitation : ${user.email} start invitation process`)        
+        return await this.authService.verifyInvitationByUserEmail(user.email, user.uuid);
     }
 }

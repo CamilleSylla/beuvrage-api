@@ -9,7 +9,7 @@ export class InvitationService {
 
     constructor(
         @InjectRepository(InvitationEntity)
-        private readonly invitationRepository: Repository<InvitationEntity>
+        private readonly invitationRepository: Repository<InvitationEntity>,
     ){}
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
@@ -17,5 +17,5 @@ export class InvitationService {
         const date = new Date();
         date.setDate(date.getDate() - 5);
         await this.invitationRepository.delete({createdAt: LessThan(date)})
-    }    
+    } 
 }

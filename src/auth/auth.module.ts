@@ -6,12 +6,24 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { InvitationEntity } from './entity/invitation.entity';
 import { InvitationService } from './invitation/invitation.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     UserModule, 
     TypeOrmModule.forFeature([InvitationEntity]),
-    ScheduleModule.forRoot()
+    ScheduleModule.forRoot(),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: await configService.get('AUTH_INVITE_SIGN'),
+        signOptions : {
+          expiresIn: 3600
+        }
+      }), 
+      inject: [ConfigService]
+    })
   ],
   controllers: [AuthController],
   providers: [AuthService, InvitationService],
