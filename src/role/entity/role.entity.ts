@@ -3,13 +3,13 @@ import { RoleList } from "./role.enum";
 
 @Entity()
 export class RoleEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: 'enum',
-        enum: RoleList,
-        default: RoleList.VIEWER
-    })
-    name: string
+  @Column({
+    type: "enum",
+    enum: RoleList,
+    default: RoleList.VIEWER,
+  })
+  name: string;
 }

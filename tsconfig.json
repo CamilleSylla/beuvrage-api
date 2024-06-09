@@ -18,6 +18,6 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "husky.config.js"]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "husky.config.js", "commitlint.config.js"]
 }

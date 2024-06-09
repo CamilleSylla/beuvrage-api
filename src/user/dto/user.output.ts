@@ -3,18 +3,18 @@ import { RoleList } from "src/role/entity/role.enum";
 
 @ObjectType()
 export class UserOutput {
-    @Field(() => String)
-    id: string;
+  @Field(() => String)
+  id: string;
 
-    @Field(() => String)
-    firstName: string;
+  @Field(() => String)
+  firstName: string;
 
-    @Field(() => String)
-    lastName: string;
-   
-    @Field(() => String)
-    email: string;
+  @Field(() => String)
+  lastName: string;
 
-    @Field(() => RoleList)
-    role: RoleList
+  @Field(() => String)
+  email: string;
+
+  @Field(() => RoleList)
+  role: RoleList;
 }

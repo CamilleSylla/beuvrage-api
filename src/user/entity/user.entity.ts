@@ -1,37 +1,44 @@
 import { InvitationEntity } from "src/auth/entity/invitation.entity";
 import { RoleOutput } from "src/role/dto/role.output";
 import { RoleEntity } from "src/role/entity/role.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class UsersEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column({ nullable: false, type: String })
+  firstName: string;
 
-    @Column({nullable: false, type: String})
-    firstName: string;
-    
-    @Column({nullable: false, type: String})
-    lastName: string;
-    
-    @Column({nullable: false, type: String})
-    email: string;
-    
-    @Column({nullable: true, type: String, default: null, select: false})
-    password: string;
+  @Column({ nullable: false, type: String })
+  lastName: string;
 
-    @ManyToMany(() => RoleEntity, {
-        nullable: false,
-        cascade: true
-    })
-    @JoinTable()
-    role: RoleOutput[]
+  @Column({ nullable: false, type: String })
+  email: string;
 
-    @Column({nullable: false, default: false})
-    verify: boolean
-    
-    @OneToOne(() => InvitationEntity, { cascade: true })
-    @JoinColumn()
-    invitation: InvitationEntity
+  @Column({ nullable: true, type: String, default: null, select: false })
+  password: string;
+
+  @ManyToMany(() => RoleEntity, {
+    nullable: false,
+    cascade: true,
+  })
+  @JoinTable()
+  role: RoleOutput[];
+
+  @Column({ nullable: false, default: false })
+  verify: boolean;
+
+  @OneToOne(() => InvitationEntity, { cascade: true })
+  @JoinColumn()
+  invitation: InvitationEntity;
 }

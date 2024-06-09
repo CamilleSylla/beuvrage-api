@@ -1,5 +1,4 @@
 import { config } from 'dotenv';
-import { join } from 'path';
 import { DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
 

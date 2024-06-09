@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { AdminUserResolver } from './admin-user.resolver';
-import { AdminUserService } from './admin-user.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersEntity } from 'src/user/entity/user.entity';
-import { RoleModule } from 'src/role/role.module';
-import { InvitationEntity } from 'src/auth/entity/invitation.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { Module } from "@nestjs/common";
+import { AdminUserResolver } from "./admin-user.resolver";
+import { AdminUserService } from "./admin-user.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { UsersEntity } from "src/user/entity/user.entity";
+import { RoleModule } from "src/role/role.module";
+import { InvitationEntity } from "src/auth/entity/invitation.entity";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module({
   imports: [

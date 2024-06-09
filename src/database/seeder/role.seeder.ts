@@ -6,7 +6,8 @@ import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 export default class RoleSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
-    factoryManager: SeederFactoryManager
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    factoryManager: SeederFactoryManager,
   ): Promise<void> {
     console.log('seed.role : starting process');
 

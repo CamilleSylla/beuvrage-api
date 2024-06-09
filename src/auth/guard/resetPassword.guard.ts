@@ -3,8 +3,8 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { AuthService } from '../auth.service';
+} from "@nestjs/common";
+import { AuthService } from "../auth.service";
 
 @Injectable()
 export class ResetPasswordGuard implements CanActivate {

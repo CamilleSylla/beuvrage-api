@@ -1,18 +1,25 @@
-import { UsersEntity } from "src/user/entity/user.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Generated, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UsersEntity } from 'src/user/entity/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Generated,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class InvitationEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    @Generated("uuid")
-    uuid: string;
+  @Column()
+  @Generated('uuid')
+  uuid: string;
 
-    @CreateDateColumn()
-    createdAt: Date
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @OneToOne(() => UsersEntity, user => user.invitation)
-    user: UsersEntity;
+  @OneToOne(() => UsersEntity, (user) => user.invitation)
+  user: UsersEntity;
 }
