@@ -1,6 +1,5 @@
 export const UserInvitationTemplate = (vars) => {
   const { link } = vars;
-  console.log(link);
 
   return `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -99,7 +98,7 @@ export const UserInvitationTemplate = (vars) => {
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href class="es-button" target="${link}" style="padding-left: 30px; padding-right: 30px; border-radius: 6px">Accèder au site</a></span></td>
+                                                                                    <td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius: 6px;"><a href="${link}" class="es-button" target="" style="padding-left: 30px; padding-right: 30px; border-radius: 6px">Accèder au site</a></span></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>

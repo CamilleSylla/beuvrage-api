@@ -31,7 +31,6 @@ export class AuthService {
     });
     if (!verify)
       await this.userService.updateUserById(userId, { verify: true });
-
     return invitation.uuid === uuid;
   }
 

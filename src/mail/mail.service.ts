@@ -1,7 +1,7 @@
-import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { UserInvitationTemplate } from './templates/user-invitation';
+import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable, Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { UserInvitationTemplate } from "./templates/user-invitation";
 @Injectable()
 export class MailService {
   private logger = new Logger(MailService.name);
@@ -13,9 +13,9 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to,
-        from: 'USM Beuvrages <no-reply@beuvrages.com>',
-        subject: 'Quotes',
-        html: `${UserInvitationTemplate({ link: this.configService.get('BASE_URL') + path })}`,
+        from: "USM Beuvrages <no-reply@beuvrages.com>",
+        subject: "Quotes",
+        html: `${UserInvitationTemplate({ link: this.configService.get("BASE_URL") + path })}`,
       });
       return {
         success: true,
