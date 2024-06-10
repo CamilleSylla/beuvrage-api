@@ -1,6 +1,6 @@
-import { InvitationEntity } from "src/auth/entity/invitation.entity";
-import { RoleOutput } from "src/role/dto/role.output";
-import { RoleEntity } from "src/role/entity/role.entity";
+import { InvitationEntity } from 'src/auth/entity/invitation.entity';
+import { RoleOutput } from 'src/role/dto/role.output';
+import { RoleEntity } from 'src/role/entity/role.entity';
 import {
   Column,
   Entity,
@@ -9,12 +9,12 @@ import {
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity()
 export class UsersEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ nullable: false, type: String })
   firstName: string;

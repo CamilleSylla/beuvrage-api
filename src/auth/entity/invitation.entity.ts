@@ -11,7 +11,7 @@ import {
 @Entity()
 export class InvitationEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   @Generated('uuid')
