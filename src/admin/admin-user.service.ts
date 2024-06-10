@@ -1,47 +1,29 @@
-import { Injectable } from "@nestjs/common";
-import { CreateUserInput } from "./dto/create-user.input";
-import { InjectRepository } from "@nestjs/typeorm";
-import { UsersEntity } from "src/user/entity/user.entity";
-import { Repository } from "typeorm";
-import { plainToInstance } from "class-transformer";
-import { RoleList } from "src/role/entity/role.enum";
-import { RoleService } from "src/role/role.service";
-import { InvitationEntity } from "src/auth/entity/invitation.entity";
-import { ConfigService } from "@nestjs/config";
-import { AuthService } from "src/auth/auth.service";
-import { MailService } from "src/mail/mail.service";
+import { Injectable } from '@nestjs/common';
+import { AdminCreateUserInput } from './dto/create-user.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UsersEntity } from 'src/user/entity/user.entity';
+import { Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
+import { RoleList } from 'src/role/entity/role.enum';
+import { RoleService } from 'src/role/role.service';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class AdminUserService {
   constructor(
-    private readonly configService: ConfigService,
     @InjectRepository(UsersEntity)
     private readonly usersRepository: Repository<UsersEntity>,
-    @InjectRepository(InvitationEntity)
-    private readonly invitationRepository: Repository<UsersEntity>,
     private readonly roleService: RoleService,
     private readonly authService: AuthService,
-    private readonly mailService: MailService,
   ) {}
 
-  async createUser(user: CreateUserInput) {
+  async createUser(user: AdminCreateUserInput) {
     const role = await this.roleService.getRoleByNames(
       user?.role ? user?.role : [RoleList.VIEWER],
     );
     const userInstance = plainToInstance(UsersEntity, { ...user, role });
     const profile = await this.usersRepository.save(userInstance);
-    const invitationInstance = plainToInstance(InvitationEntity, {
-      user: profile,
-    });
-    const invitation = await this.invitationRepository.save(invitationInstance);
-    const token = await this.authService.generateResetPwdToken({
-      email: profile.email,
-      uuid: invitation.uuid,
-    });
-    await this.mailService.sendInvitaitonMail(
-      profile.email,
-      "/auth/register/invitation/" + token,
-    );
+    await this.authService.createResetPasswordMail(profile);
     return profile;
   }
 }
