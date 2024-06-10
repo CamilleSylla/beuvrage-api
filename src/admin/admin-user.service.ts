@@ -15,11 +15,12 @@ export class AdminUserService {
   constructor(
     private readonly configService: ConfigService,
     @InjectRepository(UsersEntity)
-    private usersRepository: Repository<UsersEntity>,
+    private readonly usersRepository: Repository<UsersEntity>,
     @InjectRepository(InvitationEntity)
-    private invitationRepository: Repository<UsersEntity>,
-    private roleService: RoleService,
-    private authService: AuthService,
+    private readonly invitationRepository: Repository<UsersEntity>,
+    private readonly roleService: RoleService,
+    private readonly authService: AuthService,
+    private readonly mailService: MailService,
   ) {}
 
   async createUser(user: CreateUserInput) {
@@ -36,6 +37,7 @@ export class AdminUserService {
       email: profile.email,
       uuid: invitation.uuid,
     });
+
     return profile;
   }
 }

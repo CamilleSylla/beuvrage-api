@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { UserService } from "src/user/user.service";
-import { JwtService } from "@nestjs/jwt";
-import { InvitationEntity } from "./entity/invitation.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Injectable, Logger } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { InvitationEntity } from './entity/invitation.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +24,7 @@ export class AuthService {
     );
     const { id: userId } = await this.userService.getUserByEmail(email);
     this.logger.log(
-      `auth.register.invitation.verifyInvationUUID : ${email} checking if user exist`,
+      `auth.register.invitation.verifyInvationUUID : ${email} comparing invitation uuids`,
     );
     const invitation = await this.invitationRepository.findOne({
       where: { user: { id: userId } },
