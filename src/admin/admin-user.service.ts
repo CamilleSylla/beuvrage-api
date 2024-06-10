@@ -20,7 +20,6 @@ export class AdminUserService {
     private readonly invitationRepository: Repository<UsersEntity>,
     private readonly roleService: RoleService,
     private readonly authService: AuthService,
-    private readonly mailService: MailService,
   ) {}
 
   async createUser(user: CreateUserInput) {
