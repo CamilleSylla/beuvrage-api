@@ -1,4 +1,3 @@
-import { IsEmail, IsString } from 'class-validator';
 import { InvitationEntity } from 'src/auth/entity/invitation.entity';
 import { RoleOutput } from 'src/role/dto/role.output';
 import { RoleEntity } from 'src/role/entity/role.entity';
@@ -18,15 +17,12 @@ export class UsersEntity {
   id: string;
 
   @Column({ nullable: false, type: String })
-  @IsString()
   firstName: string;
 
   @Column({ nullable: false, type: String })
-  @IsString()
   lastName: string;
 
   @Column({ nullable: false, type: String, unique: true })
-  @IsEmail()
   email: string;
 
   @Column({ nullable: true, type: String, default: null, select: false })
