@@ -28,12 +28,19 @@ type Query {
 }
 
 type Mutation {
-  adminCreateUser(user: CreateUserInput!): UserOutput!
+  adminCreateUser(user: AdminCreateUserInput!): UserOutput!
+  createUser(payload: CreateUserInput!): UserOutput!
+}
+
+input AdminCreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String
+  role: String
 }
 
 input CreateUserInput {
   firstName: String!
   lastName: String!
   email: String
-  role: String
 }
