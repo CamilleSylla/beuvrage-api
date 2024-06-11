@@ -1,4 +1,4 @@
-import { UsersEntity } from "src/user/entity/user.entity";
+import { UsersEntity } from 'src/user/entity/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +6,7 @@ import {
   Generated,
   OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity()
 export class InvitationEntity {
@@ -14,7 +14,7 @@ export class InvitationEntity {
   id: string;
 
   @Column()
-  @Generated("uuid")
+  @Generated('uuid')
   uuid: string;
 
   @CreateDateColumn()

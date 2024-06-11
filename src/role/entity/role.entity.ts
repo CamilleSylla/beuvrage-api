@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { RoleList } from "./role.enum";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleList } from './role.enum';
 
 @Entity()
 export class RoleEntity {
@@ -7,7 +7,7 @@ export class RoleEntity {
   id: number;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: RoleList,
     default: RoleList.VIEWER,
   })

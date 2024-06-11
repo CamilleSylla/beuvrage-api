@@ -3,10 +3,10 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
-import { Observable } from "rxjs";
-import { AuthService } from "../auth.service";
+} from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -18,9 +18,9 @@ export class GqlAuthGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext();
     const authorization = ctx.getContext().req?.headers?.authorization;
-    const bearer = authorization.split(" ")[0];
-    if (bearer !== "Bearer") throw new UnauthorizedException();
-    const token = authorization.split(" ")[1];
+    const bearer = authorization.split(' ')[0];
+    if (bearer !== 'Bearer') throw new UnauthorizedException();
+    const token = authorization.split(' ')[1];
     try {
       request.user = this.authService.validateResetPwdToken(token);
     } catch (error) {

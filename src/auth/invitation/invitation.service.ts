@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { InvitationEntity } from "../entity/invitation.entity";
-import { LessThan, Repository } from "typeorm";
-import { Cron, CronExpression } from "@nestjs/schedule";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InvitationEntity } from '../entity/invitation.entity';
+import { LessThan, Repository } from 'typeorm';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class InvitationService {

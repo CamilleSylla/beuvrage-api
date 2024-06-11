@@ -1,7 +1,7 @@
-import { RoleEntity } from "src/role/entity/role.entity";
-import { RoleList } from "src/role/entity/role.enum";
-import { DataSource } from "typeorm";
-import { Seeder, SeederFactoryManager } from "typeorm-extension";
+import { RoleEntity } from 'src/role/entity/role.entity';
+import { RoleList } from 'src/role/entity/role.enum';
+import { DataSource } from 'typeorm';
+import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 
 export default class RoleSeeder implements Seeder {
   public async run(
@@ -9,7 +9,7 @@ export default class RoleSeeder implements Seeder {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     factoryManager: SeederFactoryManager,
   ): Promise<void> {
-    console.log("seed.role : starting process");
+    console.log('seed.role : starting process');
 
     await dataSource.query('TRUNCATE "role_entity" RESTART IDENTITY CASCADE');
 
@@ -25,6 +25,6 @@ export default class RoleSeeder implements Seeder {
       console.log(`seed.role : ${key} role created`);
     }
 
-    console.log("seed.role : done");
+    console.log('seed.role : done');
   }
 }

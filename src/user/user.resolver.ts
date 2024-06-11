@@ -1,12 +1,12 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { UserOutput } from "./dto/user.output";
-import { CreateUserInput } from "./dto/create-user.input";
-import { UserService } from "./user.service";
-import { AuthService } from "src/auth/auth.service";
-import { BadRequestException, Logger, UseGuards } from "@nestjs/common";
-import { UpdateUserPasswordInput } from "./dto/update-user-password.input";
-import { CurrentUser } from "src/auth/decorator/current-user.decorator";
-import { GqlAuthGuard } from "src/auth/guard/gql.guard";
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UserOutput } from './dto/user.output';
+import { CreateUserInput } from './dto/create-user.input';
+import { UserService } from './user.service';
+import { AuthService } from 'src/auth/auth.service';
+import { BadRequestException, Logger, UseGuards } from '@nestjs/common';
+import { UpdateUserPasswordInput } from './dto/update-user-password.input';
+import { CurrentUser } from 'src/auth/decorator/current-user.decorator';
+import { GqlAuthGuard } from 'src/auth/guard/gql.guard';
 
 @Resolver()
 export class UserResolver {
@@ -17,12 +17,12 @@ export class UserResolver {
   ) {}
   @Query(() => String)
   getUser() {
-    return "hello";
+    return 'hello';
   }
 
   @Mutation(() => UserOutput)
   async createUser(
-    @Args("payload", { type: () => CreateUserInput }) payload: CreateUserInput,
+    @Args('payload', { type: () => CreateUserInput }) payload: CreateUserInput,
   ) {
     this.logger.log(
       `user.create: starting create user basic flow for ${payload.email}`,
@@ -37,7 +37,7 @@ export class UserResolver {
   @UseGuards(GqlAuthGuard)
   async changeUserPassword(
     @CurrentUser() user: { email: string; uuid: string },
-    @Args("payload", { type: () => UpdateUserPasswordInput })
+    @Args('payload', { type: () => UpdateUserPasswordInput })
     payload: UpdateUserPasswordInput,
   ) {
     await this.authService.verifyInvitationByUserEmail(user.email, user.uuid);

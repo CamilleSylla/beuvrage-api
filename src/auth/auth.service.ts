@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable, Logger } from "@nestjs/common";
-import { UserService } from "src/user/user.service";
-import { JwtService } from "@nestjs/jwt";
-import { InvitationEntity } from "./entity/invitation.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { UsersEntity } from "src/user/entity/user.entity";
-import { plainToInstance } from "class-transformer";
-import { MailService } from "src/mail/mail.service";
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { InvitationEntity } from './entity/invitation.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UsersEntity } from 'src/user/entity/user.entity';
+import { plainToInstance } from 'class-transformer';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -69,7 +69,7 @@ export class AuthService {
     );
     await this.mailService.sendInvitaitonMail(
       user.email,
-      "/auth/register/invitation/" + token,
+      '/auth/register/invitation/' + token,
     );
   }
 

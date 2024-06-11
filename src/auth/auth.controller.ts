@@ -1,14 +1,14 @@
-import { Controller, Get, Logger, Request, UseGuards } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { ResetPasswordGuard } from "./guard/resetPassword.guard";
+import { Controller, Get, Logger, Request, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { ResetPasswordGuard } from './guard/resetPassword.guard';
 
-@Controller("auth")
+@Controller('auth')
 export class AuthController {
   private logger = new Logger(AuthController.name);
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(ResetPasswordGuard)
-  @Get("/register/invitation/:token")
+  @Get('/register/invitation/:token')
   async registerUserInvitation(
     @Request() req: { user: { email: string; uuid: string } },
   ) {
