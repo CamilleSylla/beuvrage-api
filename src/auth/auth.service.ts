@@ -10,6 +10,8 @@ import { MailService } from 'src/mail/mail.service';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtAccessClaims } from './types/jwt';
+import * as jwt from 'jsonwebtoken';
+import { RefreshTokenEntity } from './entity/refresh-token.entity';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +23,8 @@ export class AuthService {
     private readonly mailService: MailService,
     @InjectRepository(InvitationEntity)
     private readonly invitationRepository: Repository<InvitationEntity>,
+    @InjectRepository(RefreshTokenEntity)
+    private readonly refreshTokenRepository: Repository<RefreshTokenEntity>,
   ) {}
 
   async verifyInvitationByUserEmail(
@@ -95,6 +99,34 @@ export class AuthService {
   validateAccessToken(token: string): JwtAccessClaims {
     return this.jwtService.verify(token, {
       secret: this.configService.get('AUTH_ACCESS_TOKEN_SK'),
+    });
+  }
+
+  async generateRefreshToken(id: string) {
+    return jwt.sign({ id }, this.configService.get('AUTH_REFRESH_TOKEN_SK'), {
+      expiresIn: '14d',
+    });
+  }
+
+  async assignRefreshTokenToUser(user: UsersEntity, token: string) {
+    const hashToken = await bcrypt.hash(token, 1);
+
+    const refreshTokenInstance = plainToInstance(RefreshTokenEntity, {
+      user,
+      token: hashToken,
+    });
+    const result = await this.refreshTokenRepository.save(refreshTokenInstance);
+    await this.userService.updateUserById(user.id, {
+      refresh_token: result,
+    });
+  }
+
+  async validateRefreshToken(id: string, token: string) {
+    const hashToken = await this.userService.getUserRefreshToken(id);
+    const match = await bcrypt.compare(token, hashToken);
+    if (!match) throw new BadRequestException();
+    return await this.jwtService.verifyAsync(token, {
+      secret: this.configService.get('AUTH_REFRESH_TOKEN_SK'),
     });
   }
 }

@@ -45,12 +45,24 @@ export class AuthResolver {
         last_login: new Date(),
       });
       this.logger.log(
-        `auth.login: ${credentials.email} successfully logged in`,
+        `auth.login: ${credentials.email} checking for refresh token`,
       );
+      let refresh_token = await this.userService.getUserRefreshToken(
+        profile.id,
+      );
+      if (!refresh_token) {
+        refresh_token = await this.authService.generateRefreshToken(profile.id);
+        this.logger.log(
+          `auth.login: assigning refresh token to user ${profile.email}`,
+        );
+        await this.authService.assignRefreshTokenToUser(profile, refresh_token);
+      }
+      this.logger.log(`auth.login: ${profile.email} successfully logged in`);
       return {
         access_token: await this.authService.generateAccesToken({
           id: profile.id,
         }),
+        refresh_token,
       };
     }
   }

@@ -1,4 +1,5 @@
 import { InvitationEntity } from 'src/auth/entity/invitation.entity';
+import { RefreshTokenEntity } from 'src/auth/entity/refresh-token.entity';
 import { RoleOutput } from 'src/role/dto/role.output';
 import { RoleEntity } from 'src/role/entity/role.entity';
 import {
@@ -41,6 +42,10 @@ export class UsersEntity {
   @OneToOne(() => InvitationEntity, { cascade: true, onDelete: 'SET NULL' })
   @JoinColumn()
   invitation: InvitationEntity;
+
+  @OneToOne(() => RefreshTokenEntity, { cascade: true, onDelete: 'SET NULL' })
+  @JoinColumn()
+  refresh_token: RefreshTokenEntity;
 
   @Column({ type: Date, nullable: true, default: null, select: false })
   last_login: Date;

@@ -20,7 +20,6 @@ export class UserService {
   async createUser(payload: CreateUserInput) {
     const role = await this.roleService.getByName(RoleList.VIEWER);
     const userInstance = plainToInstance(UsersEntity, { ...payload, role });
-    console.log(userInstance);
     return await this.userRepository.save(userInstance);
   }
 
@@ -56,5 +55,17 @@ export class UserService {
       select: ['password'],
     });
     return password;
+  }
+
+  async getUserRefreshToken(id: string) {
+    const { refresh_token } = await this.userRepository.findOne({
+      where: { id },
+      relations: ['refresh_token'],
+    });
+    if (refresh_token) {
+      return refresh_token.token;
+    } else {
+      return null;
+    }
   }
 }

@@ -10,12 +10,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailModule } from 'src/mail/mail.module';
 import { AuthResolver } from './auth.resolver';
+import { RefreshTokenEntity } from './entity/refresh-token.entity';
 
 @Module({
   imports: [
     UserModule,
     MailModule,
-    TypeOrmModule.forFeature([InvitationEntity]),
+    TypeOrmModule.forFeature([InvitationEntity, RefreshTokenEntity]),
     ScheduleModule.forRoot(),
     JwtModule.registerAsync({
       imports: [ConfigModule],

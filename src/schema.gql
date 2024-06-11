@@ -25,6 +25,7 @@ enum RoleList {
 
 type LoginOutput {
   access_token: String!
+  refresh_token: String
 }
 
 type Query {

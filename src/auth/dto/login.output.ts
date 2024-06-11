@@ -4,4 +4,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class LoginOutput {
   @Field(() => String)
   access_token: string;
+
+  @Field(() => String, { nullable: true })
+  refresh_token?: string;
 }
