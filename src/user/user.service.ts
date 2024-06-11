@@ -32,11 +32,12 @@ export class UserService {
   }
 
   async getUserRoleById(id: string) {
-    return await this.userRepository.findOne({
+    const { role } = await this.userRepository.findOne({
       where: { id },
       relations: ['role'],
       select: ['role'],
     });
+    return role;
   }
 
   async encryptPassword(password: string) {

@@ -72,7 +72,6 @@ export class UserResolver {
     user: UsersEntity,
   ) {
     const { id } = user;
-    const { role } = await this.userService.getUserRoleById(id);
-    return role;
+    return await this.userService.getUserRoleById(id);
   }
 }
