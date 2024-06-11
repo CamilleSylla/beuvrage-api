@@ -1,6 +1,6 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
-import { RoleList } from 'src/role/entity/role.enum';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
+import { RoleList } from "src/role/entity/role.enum";
 
 @InputType()
 export class AdminCreateUserInput {

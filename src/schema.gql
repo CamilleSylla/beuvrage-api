@@ -30,6 +30,7 @@ type Query {
 type Mutation {
   adminCreateUser(user: AdminCreateUserInput!): UserOutput!
   createUser(payload: CreateUserInput!): UserOutput!
+  changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
 }
 
 input AdminCreateUserInput {
@@ -43,4 +44,8 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   email: String
+}
+
+input UpdateUserPasswordInput {
+  password: String!
 }
