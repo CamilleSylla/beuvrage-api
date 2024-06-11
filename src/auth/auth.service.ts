@@ -1,12 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-import { JwtService } from '@nestjs/jwt';
-import { InvitationEntity } from './entity/invitation.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UsersEntity } from 'src/user/entity/user.entity';
-import { plainToInstance } from 'class-transformer';
-import { MailService } from 'src/mail/mail.service';
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
+import { UserService } from "src/user/user.service";
+import { JwtService } from "@nestjs/jwt";
+import { InvitationEntity } from "./entity/invitation.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { UsersEntity } from "src/user/entity/user.entity";
+import { plainToInstance } from "class-transformer";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class AuthService {
@@ -35,7 +35,10 @@ export class AuthService {
     });
     if (!verify)
       await this.userService.updateUserById(userId, { verify: true });
-    return invitation.uuid === uuid;
+    if (invitation) {
+      return invitation.uuid === uuid;
+    }
+    throw new BadRequestException();
   }
 
   async generateResetPwdToken(payload: { email: string; uuid: string }) {
@@ -66,7 +69,11 @@ export class AuthService {
     );
     await this.mailService.sendInvitaitonMail(
       user.email,
-      '/auth/register/invitation/' + token,
+      "/auth/register/invitation/" + token,
     );
+  }
+
+  async deleteInvitation(uuid: string) {
+    return await this.invitationRepository.delete({ uuid });
   }
 }
