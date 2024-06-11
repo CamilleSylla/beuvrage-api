@@ -21,32 +21,37 @@ export class AuthResolver {
     @Args('credentials', { type: () => LoginInput }) credentials: LoginInput,
   ) {
     this.logger.log(`auth.login: ${credentials.email} trying to login`);
-    const { id, verify } = await this.userService.getUserByEmail(
-      credentials.email,
-    );
-    if (!id) {
+    const profile = await this.userService.getUserByEmail(credentials.email);
+    if (!profile || !profile.id) {
       this.logger.log(`auth.login: no user found for ${credentials.email}`);
       throw new BadRequestException();
-    } else if (!verify) {
+    } else if (!profile.verify) {
       this.logger.log(
         `auth.login: ${credentials.email} is not a verify profile`,
       );
       throw new ForbiddenException('Profile not verified');
-    }
-    const match = await this.authService.compareUserPassword(
-      id,
-      credentials.password,
-    );
-    if (!match) {
-      this.logger.log(
-        `auth.login: password are not matching for ${credentials.email}`,
+    } else {
+      const match = await this.authService.compareUserPassword(
+        profile.id,
+        credentials.password,
       );
-      throw new BadRequestException();
+      if (!match) {
+        this.logger.log(
+          `auth.login: password are not matching for ${credentials.email}`,
+        );
+        throw new BadRequestException();
+      }
+      await this.userService.updateUserById(profile.id, {
+        last_login: new Date(),
+      });
+      this.logger.log(
+        `auth.login: ${credentials.email} successfully logged in`,
+      );
+      return {
+        access_token: await this.authService.generateAccesToken({
+          id: profile.id,
+        }),
+      };
     }
-    await this.userService.updateUserById(id, { last_login: new Date() });
-    this.logger.log(`auth.login: ${credentials.email} successfully logged in`);
-    return {
-      access_token: await this.authService.generateAccesToken({ id }),
-    };
   }
 }

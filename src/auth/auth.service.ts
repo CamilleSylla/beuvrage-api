@@ -9,6 +9,7 @@ import { plainToInstance } from 'class-transformer';
 import { MailService } from 'src/mail/mail.service';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { JwtAccessClaims } from './types/jwt';
 
 @Injectable()
 export class AuthService {
@@ -87,6 +88,12 @@ export class AuthService {
 
   async generateAccesToken(profile: Partial<UsersEntity>) {
     return await this.jwtService.signAsync(profile, {
+      secret: this.configService.get('AUTH_ACCESS_TOKEN_SK'),
+    });
+  }
+
+  validateAccessToken(token: string): JwtAccessClaims {
+    return this.jwtService.verify(token, {
       secret: this.configService.get('AUTH_ACCESS_TOKEN_SK'),
     });
   }

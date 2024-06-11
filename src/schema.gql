@@ -10,10 +10,6 @@ type UserOutput {
   role: [RoleOutput!]!
 }
 
-type LoginOutput {
-  access_token: String!
-}
-
 type RoleOutput {
   id: String!
   name: RoleList!
@@ -27,8 +23,12 @@ enum RoleList {
   SUPERADMIN
 }
 
+type LoginOutput {
+  access_token: String!
+}
+
 type Query {
-  getUser: String!
+  me: UserOutput!
 }
 
 type Mutation {

@@ -7,10 +7,14 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -22,7 +26,13 @@ export class GqlAuthGuard implements CanActivate {
     if (bearer !== 'Bearer') throw new UnauthorizedException();
     const token = authorization.split(' ')[1];
     try {
-      request.user = this.authService.validateResetPwdToken(token);
+      const claims = this.authService.validateAccessToken(token);
+
+      if (claims.id) {
+        request.user = this.userService
+          .getUserById(claims.id as string)
+          .then((user) => user);
+      }
     } catch (error) {
       console.log(error);
       throw new UnauthorizedException();
