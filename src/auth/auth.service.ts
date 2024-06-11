@@ -7,11 +7,14 @@ import { Repository } from 'typeorm';
 import { UsersEntity } from 'src/user/entity/user.entity';
 import { plainToInstance } from 'class-transformer';
 import { MailService } from 'src/mail/mail.service';
+import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   private logger = new Logger(AuthService.name);
   constructor(
+    private readonly configService: ConfigService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly mailService: MailService,
@@ -75,5 +78,16 @@ export class AuthService {
 
   async deleteInvitation(uuid: string) {
     return await this.invitationRepository.delete({ uuid });
+  }
+
+  async compareUserPassword(id: string, pass: string) {
+    const password = await this.userService.getUserPassword(id);
+    return await bcrypt.compare(pass, password);
+  }
+
+  async generateAccesToken(profile: Partial<UsersEntity>) {
+    return await this.jwtService.signAsync(profile, {
+      secret: this.configService.get('AUTH_ACCESS_TOKEN_SK'),
+    });
   }
 }

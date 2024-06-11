@@ -32,4 +32,12 @@ export class UserService {
     this.logger.debug(`user.update: updating user ${id}`);
     return await this.userRepository.update({ id }, payload);
   }
+
+  async getUserPassword(id: string) {
+    const { password } = await this.userRepository.findOne({
+      where: { id },
+      select: ['password'],
+    });
+    return password;
+  }
 }

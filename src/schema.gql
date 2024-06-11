@@ -10,6 +10,10 @@ type UserOutput {
   role: [RoleOutput!]!
 }
 
+type LoginOutput {
+  access_token: String!
+}
+
 type RoleOutput {
   id: String!
   name: RoleList!
@@ -31,6 +35,7 @@ type Mutation {
   adminCreateUser(user: AdminCreateUserInput!): UserOutput!
   createUser(payload: CreateUserInput!): UserOutput!
   changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
+  login(credentials: LoginInput!): LoginOutput!
 }
 
 input AdminCreateUserInput {
@@ -47,5 +52,10 @@ input CreateUserInput {
 }
 
 input UpdateUserPasswordInput {
+  password: String!
+}
+
+input LoginInput {
+  email: String!
   password: String!
 }

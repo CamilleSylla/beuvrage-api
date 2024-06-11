@@ -9,6 +9,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailModule } from 'src/mail/mail.module';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { MailModule } from 'src/mail/mail.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, InvitationService],
+  providers: [AuthService, InvitationService, AuthResolver],
   exports: [AuthService, InvitationService],
 })
 export class AuthModule {}

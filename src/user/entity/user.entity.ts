@@ -41,4 +41,7 @@ export class UsersEntity {
   @OneToOne(() => InvitationEntity, { cascade: true, onDelete: 'SET NULL' })
   @JoinColumn()
   invitation: InvitationEntity;
+
+  @Column({ type: Date, nullable: true, default: null, select: false })
+  last_login: Date;
 }
