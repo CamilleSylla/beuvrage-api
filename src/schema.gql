@@ -23,14 +23,20 @@ enum RoleList {
   SUPERADMIN
 }
 
+type LoginOutput {
+  access_token: String!
+  refresh_token: String
+}
+
 type Query {
-  getUser: String!
+  me: UserOutput!
 }
 
 type Mutation {
   adminCreateUser(user: AdminCreateUserInput!): UserOutput!
   createUser(payload: CreateUserInput!): UserOutput!
   changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
+  login(credentials: LoginInput!): LoginOutput!
 }
 
 input AdminCreateUserInput {
@@ -47,5 +53,10 @@ input CreateUserInput {
 }
 
 input UpdateUserPasswordInput {
+  password: String!
+}
+
+input LoginInput {
+  email: String!
   password: String!
 }
