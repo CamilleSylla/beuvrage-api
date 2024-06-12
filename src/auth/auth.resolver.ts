@@ -47,10 +47,11 @@ export class AuthResolver {
       this.logger.log(
         `auth.login: ${credentials.email} checking for refresh token`,
       );
-      let refresh_token = await this.userService.getUserRefreshToken(
+      const refresh_tokenExist = await this.userService.getUserRefreshToken(
         profile.id,
       );
-      if (!refresh_token) {
+      let refresh_token;
+      if (!refresh_tokenExist) {
         refresh_token = await this.authService.generateRefreshToken(profile.id);
         this.logger.log(
           `auth.login: assigning refresh token to user ${profile.email}`,
@@ -62,7 +63,7 @@ export class AuthResolver {
         access_token: await this.authService.generateAccesToken({
           id: profile.id,
         }),
-        refresh_token,
+        ...(refresh_tokenExist ? {} : { refresh_token }),
       };
     }
   }
