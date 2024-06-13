@@ -28,22 +28,39 @@ type LoginOutput {
   refresh_token: String
 }
 
+type ArticleOutput {
+  id: String!
+  title: String!
+  caption: String
+  excerpt: String
+  content: String!
+  author: UserOutput!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   me: UserOutput!
 }
 
 type Mutation {
-  adminCreateUser(user: AdminCreateUserInput!): UserOutput!
+  createArticle(inputs: CreateArticleInput!): ArticleOutput!
   createUser(payload: CreateUserInput!): UserOutput!
   changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
   login(credentials: LoginInput!): LoginOutput!
+  adminCreateUser(user: AdminCreateUserInput!): UserOutput!
 }
 
-input AdminCreateUserInput {
-  firstName: String!
-  lastName: String!
-  email: String
-  role: String
+input CreateArticleInput {
+  title: String!
+  caption: String
+  excerpt: String
+  content: String!
 }
 
 input CreateUserInput {
@@ -59,4 +76,11 @@ input UpdateUserPasswordInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input AdminCreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String
+  role: String
 }
