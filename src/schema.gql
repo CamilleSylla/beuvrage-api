@@ -50,6 +50,7 @@ type Query {
 
 type Mutation {
   createArticle(inputs: CreateArticleInput!): ArticleOutput!
+  updateArticleById(articleId: String!, inputs: UpdateArticleOutput!): ArticleOutput!
   createUser(payload: CreateUserInput!): UserOutput!
   changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
   login(credentials: LoginInput!): LoginOutput!
@@ -61,6 +62,13 @@ input CreateArticleInput {
   caption: String
   excerpt: String
   content: String!
+}
+
+input UpdateArticleOutput {
+  title: String
+  caption: String
+  excerpt: String
+  content: String
 }
 
 input CreateUserInput {

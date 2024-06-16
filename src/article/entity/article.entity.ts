@@ -1,6 +1,6 @@
-import { Field } from '@nestjs/graphql';
 import { UsersEntity } from 'src/user/entity/user.entity';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -13,16 +13,16 @@ export class ArticleEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Field(() => String)
+  @Column()
   title: string;
 
-  @Field(() => String, { nullable: true })
+  @Column()
   caption?: string;
 
-  @Field(() => String, { nullable: true })
+  @Column()
   excerpt?: string;
 
-  @Field(() => String)
+  @Column()
   content: string;
 
   @ManyToOne(() => UsersEntity, (user) => user.articles)
