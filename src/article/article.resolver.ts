@@ -44,6 +44,12 @@ export class ArticleResolver {
       inputs,
     );
   }
+
+  @Mutation(() => ArticleOutput)
+  async getArticleById(@Args('id', { type: () => String }) id: string) {
+    return await this.articleService.getArticleById(id);
+  }
+
   @ResolveField(() => UserOutput, { name: 'author' })
   async resolveAuthor(
     @Parent()

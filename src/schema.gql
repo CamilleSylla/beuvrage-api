@@ -28,6 +28,13 @@ type LoginOutput {
   refresh_token: String
 }
 
+type ArticleAuthorOutput {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
 type ArticleOutput {
   id: String!
   title: String!
@@ -51,6 +58,7 @@ type Query {
 type Mutation {
   createArticle(inputs: CreateArticleInput!): ArticleOutput!
   updateArticleById(articleId: String!, inputs: UpdateArticleOutput!): ArticleOutput!
+  getArticleById(id: String!): ArticleOutput!
   createUser(payload: CreateUserInput!): UserOutput!
   changeUserPassword(payload: UpdateUserPasswordInput!): Boolean!
   login(credentials: LoginInput!): LoginOutput!
