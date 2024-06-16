@@ -12,6 +12,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AdminModule } from './admin/admin.module';
 import { dataSourceOptions } from './database/data-source';
 import { ConfigModule } from '@nestjs/config';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -20,13 +21,14 @@ import { ConfigModule } from '@nestjs/config';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      include: [AuthModule, UserModule, RoleModule, AdminModule],
+      include: [AuthModule, UserModule, RoleModule, AdminModule, ArticleModule],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     AuthModule,
     UserModule,
     RoleModule,
     AdminModule,
+    ArticleModule,
   ],
 
   controllers: [AppController, AuthController],

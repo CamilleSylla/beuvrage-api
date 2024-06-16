@@ -1,3 +1,4 @@
+import { ArticleEntity } from 'src/article/entity/article.entity';
 import { InvitationEntity } from 'src/auth/entity/invitation.entity';
 import { RefreshTokenEntity } from 'src/auth/entity/refresh-token.entity';
 import { RoleOutput } from 'src/role/dto/role.output';
@@ -8,6 +9,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -35,6 +37,12 @@ export class UsersEntity {
   })
   @JoinTable()
   role: RoleOutput[];
+
+  @OneToMany(() => ArticleEntity, (article) => article.author, {
+    cascade: true,
+  })
+  @JoinTable()
+  articles: ArticleEntity;
 
   @Column({ nullable: false, default: false })
   verify: boolean;
